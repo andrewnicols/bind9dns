@@ -1,0 +1,25 @@
+version: "3"
+services:
+  dns:
+    build: Docker
+    ports:
+      - "53:53/udp"
+      - "953:953/tcp"
+      - "53:53/tcp"
+    volumes:
+      - type: bind
+        source: ./etc/bind
+        target: /etc/bind
+        volume:
+          nocopy: true
+      - type: bind
+        source: ./var/lib/bind
+        target: /var/lib/bind
+        volume:
+          nocopy: true
+      - dns-log:/var/log
+      - dns-cache:/var/cache/bind
+
+volumes:
+  dns-log:
+  dns-cache:
